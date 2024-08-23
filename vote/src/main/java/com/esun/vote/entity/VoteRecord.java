@@ -1,5 +1,6 @@
 package com.esun.vote.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,11 +22,11 @@ public class VoteRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer voteRecordNo;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "voter", nullable = false)
     private Voter voter;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "voteItem",nullable = false)
     private VoteItem voteItem;
 }
