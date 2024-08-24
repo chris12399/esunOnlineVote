@@ -42,11 +42,10 @@ onMounted(() => {
     fetchVoteItems();
 });
 
-// 獲取投票項目列表
+// 獲取投票項目列表及其票數
 function fetchVoteItems() {
-    axiosapi.get('/findAll')
-    .then(response => {
-        voteItems.value = response.data.list || [];
+    axiosapi.get('/itemsWithCounts').then(response => {
+        voteItems.value = response.data;
     }).catch(error => {
         console.error('Error fetching vote items:', error);
     });
@@ -58,26 +57,61 @@ function submitVotes() {
         alert('請選擇至少一個投票項目');
         return;
     }
+    // 從 sessionStorage 獲取當前使用者名稱
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser) {
+        alert('找不到當前登入的使用者，請重新登入');
+        return;
+    }
 
-    axiosapi.post('/user/create', {
-        voteItemNos: selectedVoteItems.value 
-        
-    })
+        // 準備要發送的資料
+        const dataToSubmit = {
+        voterName: currentUser,
+        voteItemNos: selectedVoteItems.value
+    };
+
+    axiosapi.post('/submitVotes', dataToSubmit)
         .then(response => {
-            // 提交成功後重新獲取列表
-            fetchVoteItems();
-            selectedVoteItems.value = [];  // 清空選擇的項目
+            if (response.data.success) {
+                alert('投票提交成功');
+                fetchVoteItems(); // 更新投票項目列表
+                selectedVoteItems.value = []; // 清空選擇的項目
+            } else {
+                alert(response.data.message);
+            }
         })
         .catch(error => {
             console.error('Error submitting votes:', error);
+            alert('投票提交失敗');
         });
 }
-</script>
 
+
+
+
+</script>
 
 <style scoped>
 /* 簡單的樣式 */
 button {
     margin: 5px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%; 
+    max-width: 600px; 
+    margin: auto;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: black;
 }
 </style>

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import Management from '@/views/pages/Management.vue';
 import userVote from '@/views/pages/userVote.vue';
+import Login from '@/views/pages/Login.vue';
 import Home from '@/views/Home.vue';
 import NotFound from '@/views/NotFound.vue';
 
@@ -10,10 +11,12 @@ import NotFound from '@/views/NotFound.vue';
 
 // 定義網頁路由
 const routes = [
-    { name: "home", path: '/', component: Home },
+    // { name: "home", path: '/', component: Home },
     { name: "notfound-link", path: "/:pathMatch(.*)*", component: NotFound },
     { name: "Management", path: '/management', component: Management },
     { name: "userVote", path: '/uservote', component: userVote },
+    { name: "Login", path: '/', component: Login },
+    // ...routerSecure,
     // ...routerSecure,
 
 

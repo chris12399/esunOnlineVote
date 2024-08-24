@@ -3,15 +3,16 @@
     <div>
         <button @click="addItem">新增按鈕</button>
     </div>
-
-    <!-- 模態窗口 -->
+    <br>
+    <br>
+    <!-- 彈出視窗 -->
     <div v-if="showModal" class="modal">
         <div class="modal-content">
             <span class="close" @click="closeModal">&times;</span>
             <h2>{{ isEditMode ? '修改投票項目' : '新增投票項目' }}</h2>
             <input v-model="newVoteItemName" placeholder="輸入投票項目名稱" />
             <button @click="isEditMode ? updateItem() : saveItem()">
-                {{ isEditMode ? '更新' : '保存' }}
+                {{ isEditMode ? '更新' : '送出' }}
             </button>
         </div>
     </div>
@@ -59,14 +60,14 @@ onMounted(() => {
     callTable();
 });
 
-// 打開新增模態窗口
+// 打開新增視窗
 function addItem() {
     isEditMode.value = false;
     newVoteItemName.value = '';
     showModal.value = true;
 }
 
-// 打開修改模態窗口
+// 打開修改視窗
 function editItem(item) {
     isEditMode.value = true;
     currentVoteItem = item;
@@ -74,7 +75,7 @@ function editItem(item) {
     showModal.value = true;
 }
 
-// 關閉模態窗口
+// 關閉模態視窗
 function closeModal() {
     showModal.value = false;
 }
@@ -152,5 +153,24 @@ async function updateItem() {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 80%; 
+    max-width: 600px; 
+    margin: auto;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: black;
 }
 </style>

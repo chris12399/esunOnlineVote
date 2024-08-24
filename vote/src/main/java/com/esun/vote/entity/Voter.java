@@ -34,6 +34,9 @@ public class Voter {
     @Column(name = "isAdmin")
     private Boolean isAdmin;
     
+    @Column(name = "password")
+    private String password;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "voter")
     private List<VoteRecord> voteRecords;
     
@@ -41,6 +44,9 @@ public class Voter {
     protected void onCreate() {
         if (isAdmin == null) {
             isAdmin = false;  // 如果 isAdmin 為 null，預設為 false
+        }
+        if(password == null) {
+        	password = "1234";
         }
     }
 }

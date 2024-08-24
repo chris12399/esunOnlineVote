@@ -8,4 +8,5 @@ import com.esun.vote.entity.Voter;
 
 public interface VoteRecordRepository extends JpaRepository<VoteRecord, Integer> {
 	boolean existsByVoteItemAndVoter(VoteItem voteItem, Voter voter);
+	Long countByVoteItem(VoteItem voteItem);
 }
